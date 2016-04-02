@@ -12,25 +12,26 @@
 #include "vector.h"
 #include "CPUTimer.h"
 
-vector<CursorNode <int> > cursorSpace(250000);
+vector<CursorNode <int> > cursorSpace(500001);
 
 using namespace std;
 
 void parseCommand(string str, char& command, int& number)
 {
-  char * cstr = new char [str.length()+1];
-  strcpy(cstr, str.c_str());
-  command = cstr[0];
-  cstr++;
-  number = atoi(cstr);
+  char * charstr = new char [str.length()+1];
+  strcpy(charstr, str.c_str());
+  command = charstr[0];
+  charstr++;
+  number = atoi(charstr);
   //cout << command << number << endl;
+  
 }
 
 int getChoice()
 {
   int choice;
   
-  cout << "ADT Menu \n"
+  cout << "   ADT Menu\n"
   << "0. Quit\n"
   << "1. LinkedList\n"
   << "2. CursorList\n"
@@ -75,6 +76,8 @@ void RunList(char* filename)
 
 void RunCursorList(char* filename)
 {
+  CursorList<int> myList(cursorSpace);
+  
   ifstream inf;
   inf.open(filename);
   string str;
@@ -86,9 +89,11 @@ void RunCursorList(char* filename)
     parseCommand(str, command, number);
     if (command == 'i')
     {
+      myList.insert(number, myList.zeroth());
     }
     else
     {
+      myList.remove(number);
     }
   }
   
@@ -97,6 +102,7 @@ void RunCursorList(char* filename)
 
 void RunStackAr(char* filename)
 {
+  StackAr<int> myList(500000);
   ifstream inf;
   inf.open(filename);
   string str;
@@ -108,9 +114,11 @@ void RunStackAr(char* filename)
     parseCommand(str, command, number);
     if (command == 'i')
     {
+      myList.push(number);
     }
     else
     {
+      myList.pop();
     }
   }
   
@@ -118,6 +126,8 @@ void RunStackAr(char* filename)
 
 void RunStackLi(char* filename)
 {
+  StackLi<int> myList;
+  
   ifstream inf;
   inf.open(filename);
   string str;
@@ -129,9 +139,11 @@ void RunStackLi(char* filename)
     parseCommand(str, command, number);
     if (command == 'i')
     {
+      myList.push(number);
     }
     else
     {
+      myList.pop();
     }
   }
   
@@ -139,6 +151,7 @@ void RunStackLi(char* filename)
 
 void RunQueueAr(char* filename)
 {
+  Queue<int> myList(500000);
   ifstream inf;
   inf.open(filename);
   string str;
@@ -150,9 +163,11 @@ void RunQueueAr(char* filename)
     parseCommand(str, command, number);
     if (command == 'i')
     {
+      myList.enqueue(number);
     }
     else
     {
+      myList.dequeue();
     }
   }
   
@@ -160,6 +175,8 @@ void RunQueueAr(char* filename)
 
 void RunSkipList(char* filename)
 {
+  SkipList<int> myList(-1, 500000);
+  
   ifstream inf;
   inf.open(filename);
   string str;
@@ -171,9 +188,11 @@ void RunSkipList(char* filename)
     parseCommand(str, command, number);
     if (command == 'i')
     {
+      myList.insert(number);
     }
     else
     {
+      myList.deleteNode(number);
     }
   }
   
