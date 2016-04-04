@@ -16,6 +16,13 @@ vector<CursorNode <int> > cursorSpace(500001);
 
 using namespace std;
 
+void NewChoice()
+{
+  cout << "Your choice is not between 0 and 6.\n" <<"Please try again.\n";
+}
+
+
+
 void parseCommand(string str, char& command, int& number)
 {
   char * charstr = new char [str.length()+1];
@@ -24,7 +31,6 @@ void parseCommand(string str, char& command, int& number)
   charstr++;
   number = atoi(charstr);
   //cout << command << number << endl;
-  
 }
 
 int getChoice()
@@ -42,7 +48,7 @@ int getChoice()
   << "Your choice >> ";
   
   cin >> choice;
-  cout << "\n";
+  //cout << "\n";
   return choice;
 }
 
@@ -69,7 +75,6 @@ void RunList(char* filename)
       myList.remove(number);
     }
   }
-  
 }
 
 
@@ -102,7 +107,7 @@ void RunCursorList(char* filename)
 
 void RunStackAr(char* filename)
 {
-  StackAr<int> myList(500000);
+  StackAr<int> myList(500001);
   ifstream inf;
   inf.open(filename);
   string str;
@@ -118,7 +123,8 @@ void RunStackAr(char* filename)
     }
     else
     {
-      myList.pop();
+      while(!myList.isEmpty())
+      {myList.pop();}
     }
   }
   
@@ -143,6 +149,7 @@ void RunStackLi(char* filename)
     }
     else
     {
+     while(!myList.isEmpty())
       myList.pop();
     }
   }
@@ -167,6 +174,7 @@ void RunQueueAr(char* filename)
     }
     else
     {
+      while(!myList.isEmpty())
       myList.dequeue();
     }
   }
@@ -198,23 +206,28 @@ void RunSkipList(char* filename)
   
 }
 
-
 int main(int argc, char **argv)
 {
   int choice;
-  char* filename = new char[1000];
+  string str;
   CPUTimer ct;
   
   
   cout << "File name >> ";
-  cin >> filename;
+  cin >> str;
+  char* filename = new char[str.length() + 1];
+  strcpy(filename, str.c_str());
   cout << "\n";
 
   do
   {
     choice = getChoice();
     ct.reset();
-
+    /*if (choice > 6 || choice < 0)
+    { 
+      cout << "Your choice is not between 0 and 6.\n" <<"Please try again.\n\n";
+      choice = getChoice();
+    }*/
     switch (choice)
     {
       case 1: RunList(filename); break;
@@ -223,9 +236,10 @@ int main(int argc, char **argv)
       case 4: RunStackLi(filename); break;
       case 5: RunQueueAr(filename); break;
       case 6: RunSkipList(filename); break;
+      default: cout << "Your choice is not between 0 and 6.\n" <<"Please try again.\n\n"; break;
     }
-      
-    cout << "CPU time: " << ct.cur_CPUTime() << endl;
+    
+    cout << "CPU time: " << ct.cur_CPUTime() << "\n"<<"\n";
 
   } while(choice > 0);
     
